@@ -12,6 +12,9 @@ colors = {
 }
 # This is just a comment
 variable = "hello"
+
+variable_2 = "Sarkis and Noeal"
+
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 df = pd.DataFrame({
