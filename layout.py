@@ -10,7 +10,8 @@ colors = {
     'background': '#DAD6D5',
     'text': '#111111'
 }
-
+# This is just a comment
+variable = "hello"
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 df = pd.DataFrame({
@@ -22,7 +23,6 @@ df = pd.DataFrame({
 df_table = pd.read_csv('https://gist.githubusercontent.com/chriddyp/c78bf172206ce24f77d6363a2d754b59/raw/c353e8ef842413cae56ae3920b8fd78468aa4cb2/usa-agricultural-exports-2011.csv')
 
 markdown_text = '''
-### Dash and Markdown
 
 Dash apps can be written in Markdown.
 Dash uses the [CommonMark](http://commonmark.org/)
