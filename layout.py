@@ -13,7 +13,7 @@ colors = {
 # This is just a comment
 variable = "hello"
 
-variable_2 = "Sarkis and Noeal"
+variable_2 = "Sarkis and Noeal number 3"
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
