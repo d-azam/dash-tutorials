@@ -7,7 +7,7 @@ import pandas as pd
 app = dash.Dash(__name__)
 
 colors = {
-    'background': '#DAD6D5',
+    'background5': '#DAD6D5',
     'text': '#111111'
 }
 # This is just a comment
