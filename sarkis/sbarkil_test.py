@@ -1,5 +1,4 @@
 import datetime
-
 import pendulum
 from airflow.operators.email_operator import EmailOperator
 from airflow.contrib.operators.bigquery_operator import BigQueryOperator
@@ -7,7 +6,6 @@ from airflow.models.variable import Variable
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.utils.email import send_email
 from airflow.contrib.operators import bigquery_to_gcs
-
 from airflow import models
 
 default_args = {
