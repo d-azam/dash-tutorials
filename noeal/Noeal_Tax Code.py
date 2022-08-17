@@ -12,7 +12,7 @@ class Tax:
         self.total_deductions = self.getTotalDeductions()
     
     def getTotalIncome(self):
-        # Get total Income - by adding all the income columns
+        # Gettt total Income - by adding all the income columns
         df = pd.DataFrame(self.data)
         df['Total_Income'] = df.apply(lambda row: row.salary_income + row.dividends_income + row.capital_gains_income + row.rent_income + row.franked_credits_income, axis = 1)
         #self.data = new_df
@@ -36,7 +36,7 @@ class Tax:
 
 
     def getTotalDeductions(self):
-        # Get total Deductions - by adding all the deductions columns
+        # Gett total Deductions - by adding all the deductions columns
         #self.data = new_df
         df = pd.DataFrame(self.data)
         df['Total_Deduction'] = df.apply(lambda row: row.travel_expenses + row.interest_on_investment_property_exenses + row.self_education_expenses + row.self_education_expenses_1, axis = 1)
