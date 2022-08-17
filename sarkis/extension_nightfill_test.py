@@ -40,7 +40,6 @@ result_email_body = """The total time required to complete the night fill work i
 Also, The total number of articles in this night fill work is <b> {{ ti.xcom_pull(task_ids='night_fill_total_amount') }}. </b>"""
 
 
-
 class NightFill():
     def __init__(self, df, num_aisles):
         self.name = 'Sarkis Barkil'
