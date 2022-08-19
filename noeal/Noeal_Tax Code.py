@@ -36,7 +36,7 @@ class Tax:
 
 
     def getTotalDeductions(self):
-        # Gett total Deductions - by adding all the deductions columns
+        # noealGett total Deductions - by adding all the deductions columns
         #self.data = new_df
         df = pd.DataFrame(self.data)
         df['Total_Deduction'] = df.apply(lambda row: row.travel_expenses + row.interest_on_investment_property_exenses + row.self_education_expenses + row.self_education_expenses_1, axis = 1)
