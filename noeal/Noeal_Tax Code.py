@@ -1,6 +1,42 @@
+import datetime
+#import pendulum
 import numpy as np
 import pandas as pd
 import os
+#from airflow.operators.email_operator import EmailOperator
+#from airflow.contrib.operators.bigquery_operator import BigQueryOperator
+#from airflow.models.variable import Variable
+#from airflow.operators.dummy_operator import DummyOperator
+#from airflow.utils.email import send_email
+#from airflow.contrib.operators import bigquery_to_gcs
+#from airflow import models
+#from airflow.operators.python_operator import PythonOperator
+
+
+
+
+default_args = {
+    "owner": "noeal",
+    "depends_on_past": False,
+    "email": "nalbhnonesan@woolworths.com.au",
+    "email_on_failure": True,
+    "email_on_retry": False,
+    "retries": 1,
+    "retry_delay": datetime.timedelta(minutes=5),
+    "start_date": datetime.datetime(
+        year=2021,
+        month=10,
+        day=14,
+        hour=0,
+        minute=0,
+        second=0,
+ #       tzinfo=pendulum.timezone("Australia/Sydney"),
+    ),
+}
+
+
+path="/home/airflow/gcs/data/tax_dummy_data.csv"
+   
 class Tax:
     
     def __init__(self, df_file):
@@ -119,12 +155,11 @@ class Tax:
         #self.data = new_df
         return(df2)
     
-    def SeparateColumnsTax_Rate (self):
-        # Select Columns
-        df = pd.DataFrame(self.data)
-        df2 = df[['Tax_Rate']]
+    #def SeparateColumnsTax_Rate (self):
+        #df = pd.DataFrame(self.data)
+        #df2 = df[['Tax_Rate']]
         #self.data = new_df
-        return(df2)
+        #return(df2)
     
     
     
@@ -134,4 +169,51 @@ class Tax:
         #df = pd.DataFrame(self.data)
         #df2 = df[["Total_Tax"]]
         #self.data = new_df
-        #return(df2)    
+        #return(df2)   
+
+
+def separateColumnsTax(**context):
+    df_file = pd.read_csv(path,index_col=0)
+    taxx = Tax(df_file)
+    taxx_ratee=taxx.SeparateColumnsTax_Rate()
+    return taxx_ratee    
+
+#with models.DAG(
+    dag_id="Noeal_Tax_Code",
+    default_view="graph",
+    default_args=default_args,
+    # retries=1,
+    schedule_interval=None,
+    catchup=False,
+#) as dag:
+
+    separateColumnsTax = PythonOperator(
+        task_id='separateColumnsTax',
+        provide_context=True,
+        python_callable=separateColumnsTax,
+        dag=dag,
+    )
+
+
+
+ 
+    #start = DummyOperator(task_id="start")
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # landing start
+    # ------------------------------------------------------------------------------------------------------------------
+
+ 
+    
+
+
+    
+      
+#email = EmailOperator(
+ #       task_id='send_email',
+  #      to='nalbhnonesan@woolworths.com.au',
+   #     subject='Airflow Alert',
+    #    html_content=""" <h3>Email Test</h3> """,
+   #     dag=dag
+ #)       
+#separateColumnsTax >> email
