@@ -49,12 +49,13 @@ def generate_table(dataframe, max_rows=10):
 
 
 fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
-
+hhghg
 fig.update_layout(
     plot_bgcolor=colors['background'],
     paper_bgcolor=colors['background'],
     font_color=colors['text']
 )
+noealll_test
 
 app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
     html.H1(
