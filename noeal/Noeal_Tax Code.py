@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import os
 import json
+import csv
 from airflow.operators.email_operator import EmailOperator
 from airflow.contrib.operators.bigquery_operator import BigQueryOperator
 from airflow.models.variable import Variable
@@ -12,7 +13,7 @@ from airflow.utils.email import send_email
 from airflow.contrib.operators import bigquery_to_gcs
 from airflow import models
 from airflow.operators.python_operator import PythonOperator
-from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesystemToGCSOperator
+
 
 
 
@@ -72,8 +73,15 @@ class Tax:
         #return self.data.loc[:'salary_income']
         #self.data[['Total_Income']]
         print(self.data.loc[:'Total_Income'])
-        return self.data.loc[:'Total_Income'].to_json()
-        
+        #return self.data.loc[:'Total_Income'].to_csv("gs://us-central1-rtla-dev-v2-bacbcff2-bucket//data//ti.csv",header=False ,index=False,quoting=1)
+        #n=self.data.loc[:'Total_Income'].to_json()
+        n=self.data.loc[:'Total_Income'].to_csv('/home/airflow/gcs/data/ti.csv',index=False)
+        #m=pd.read_json(n)
+        #return self.data.loc[:'Total_Income'].to_csv("gs://us-central1-rtla-dev-v2-bacbcff2-bucket/data/ti.csv")
+        #m= pd.DataFrame(json.loads(n))
+        #return m.to_csv("gs://us-central1-rtla-dev-v2-bacbcff2-bucket/data/ti.csv", sep=',' ,escapechar='\\', quoting=csv.QUOTE_ALL, encoding='utf-8' )
+        return n
+
     
     #def getTotalDeductions(self):
         # Gett total Deductions - by adding all the deductions columns
@@ -137,14 +145,10 @@ class Tax:
 
 
 def Total_incomee(**context):
-    #dfr=Tax(path)
-    #dfr = pd.read_csv(path,index_col=0)
-    #df = pd.DataFrame(path,data)
-    #salary_income
     taxx = Tax(path)
     taxx_ratee=taxx.getTotalIncome()
     return taxx_ratee
-   
+    
    
 
 with models.DAG(
@@ -166,28 +170,13 @@ with models.DAG(
         dag=dag,
     )
     
-    download_file = LocalFilesystemToGCSOperator(
-    task_id="download_file",
-    object_name='test_n.csv',
-    bucket='bucket-test',
-    filename='/home/airflow/gcs/data/test.csv',
-    
-    )
-
-
-
- 
-    #start = DummyOperator(task_id="start")
-
-     #------------------------------------------------------------------------------------------------------------------
-     #landing start
-     #------------------------------------------------------------------------------------------------------------------
 
 email = EmailOperator(
         task_id='send_email',
-        to='nalbhnonesan@woolworths.com.au',
+        to=['nalbhnonesan@woolworths.com.au','mwood2@woolworths.com.au','mazam1@woolworths.com.au' , 'cnandigama1@woolworths.com.au'] ,
         subject='Airflow Alert',
-        html_content="Total_incomeeeee is <b>{{ task_instance.xcom_pull(task_ids='Total_incomee') }} </b> ",
+        html_content="Total_incomeeeee  ",
+        files=['/home/airflow/gcs/data/ti.csv'],
         provide_context = True,
         dag=dag
        
@@ -195,4 +184,4 @@ email = EmailOperator(
     
  
     
-Total_incomee>>download_file>>email
+Total_incomee>>email
