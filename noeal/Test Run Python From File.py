@@ -50,7 +50,7 @@ class Tax:
         #return m.to_csv("gs://us-central1-rtla-dev-v2-bacbcff2-bucket/data/ti.csv", sep=',' ,escapechar='\\', quoting=csv.QUOTE_ALL, encoding='utf-8' )
         return n
         
-def Total_incomee( ):
+def Total_incomee(**context):
     taxx = Tax(path)
     taxx_ratee=taxx.getTotalIncome()
     return taxx_ratee
