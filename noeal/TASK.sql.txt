@@ -41,12 +41,12 @@ SELECT
     0
   END
     ) AS Num_Of_discount,
-  SUM(avg_price_lag_1),
-  SUM(avg_price_lag_2),
-  SUM(avg_price_lag_3),
-  SUM(avg_price_lag_4),
-  SUM(avg_price_lag_5),
-  SUM(avg_price_5w_mean),
+  SUM(avg_price_lag_1)as avg_price_lag1,
+  SUM(avg_price_lag_2)as avg_price_lag2,
+  SUM(avg_price_lag_3)as avg_price_lag3,
+  SUM(avg_price_lag_4)as avg_price_lag3,
+  SUM(avg_price_lag_5)as avg_price_lag4,
+  SUM(avg_price_5w_mean)as avg_price_5w_mean,
 FROM
   P2
 GROUP BY
