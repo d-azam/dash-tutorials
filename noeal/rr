@@ -1,0 +1,16 @@
+n<-read.csv("C:\\Users\\1267979\\Downloads\\bquxjob.csv")
+View(n)
+library(dplyr)
+ss<-n %>%
+  select (period_id,scenario_id, item_id, site_id,avg_price)%>%
+  group_by(scenario_id, item_id, site_id) %>%
+  dplyr::mutate(lag1 = dplyr::lag(avg_price, default = NA,order_by =period_id  ))%>%
+  dplyr::mutate(lag2 = dplyr::lag(avg_price,n=2, default = NA,order_by =period_id ))%>%
+  dplyr::mutate(lag3 = dplyr::lag(avg_price,n=3, default = NA,order_by =period_id ))%>%
+  dplyr::mutate(lag4 = dplyr::lag(avg_price,n=4, default = NA,order_by =period_id ))%>%
+  dplyr::mutate(lag5 = dplyr::lag(avg_price,n=5, default = NA,order_by =period_id ))
+write.csv(ss,"C:/Users/1267979/Downloads/ss.csv", row.names = FALSE)
+  
+
+
+  
